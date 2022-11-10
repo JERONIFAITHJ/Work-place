@@ -38,7 +38,7 @@ function Navbar() {
   };
 
   return (
-    <AppBar sx={{backgroundColor: 'powderblue', color:'black', minHeight: '80px'}} position="sticky">
+    <AppBar sx={{backgroundColor: 'powderblue', color:'black', minHeight: '80px'}} position="static">
       <Container sx={{margin:'auto'}} maxWidth="xl">
         <Toolbar disableGutters>
         <Typography
