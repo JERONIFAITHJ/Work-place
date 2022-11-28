@@ -1,0 +1,95 @@
+.section4 {
+  /* min-height: 100vh; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+}
+.section4 .floatingContainer {
+  position: absolute;
+  bottom: 23%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  border: 1px solid white;
+  border-radius: 10px;
+  align-items: center;
+  background-color: white;
+  width: 70%;
+}
+.section4 .floatingContainer input {
+  padding: 10px;
+  width: 60%;
+  border-radius: 10px;
+  border: 1px solid;
+}
+@media only screen and (max-width: 968px) {
+  .section4 .floatingContainer {
+    position: unset;
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px;
+    width: 95%;
+    margin-bottom: 15px;
+  }
+  .section4 .floatingContainer button{
+    margin-top: 10px;
+  }
+  .section4 .floatingContainer input{
+    width: 90%
+  }
+  .section4 .floatingContainer h1{
+    width: 100% !important;
+  }
+}
+.section4 .floatingContainer input:focus {
+  /* border: none; */
+  outline: none;
+}
+.section4 .floatingContainer button {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  margin-left: 5px;
+  background-color: #4540db;
+  color: white;
+}
+
+.section4 .imageContainer {
+  max-width: 80%;
+  margin: auto;
+  margin-top: 10vh;
+  margin-bottom: 15vh;
+}
+@media only screen and (max-width: 968px) {
+  .section4 {
+    min-height: 50vh;
+  }
+  .section4 .imageContainer {
+    max-width: 95%;
+  }
+}
+.section4 img {
+  max-width: 100%;
+}
+
+.footerArea {
+  box-sizing: border-box;
+  width: 90%;
+  margin: auto;
+  margin-top: 10vh;
+  padding: 50px;
+  gap: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+@media only screen and (max-width: 968px) {
+  .footerArea {
+    flex-direction: column;
+  }
+}

@@ -14,50 +14,52 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import logo from '../../Assets/mainLogo2.png'
 import Switch from '@mui/material/Switch';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { DarkModeContext } from '../Context/DarkModeContext';
 
-const pages = ['Find a Job', 'Find a Candidate'];
+const pages = [{ label: 'Home', path: '/' }, { label: 'Find Jobs', path: 'candidate/auth' }, { label: 'Find Candidates', path: 'employer/auth' }];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+const activeClass = { backgroundColor: 'lavender' }
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const [mode, setMode] = React.useContext(DarkModeContext);
+  console.log(mode);
+
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+    console.log('from open user');
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (e) => {
     setAnchorElNav(null);
+    console.log(e.target.id);
+    navigate(e.target.id);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    console.log('close user');
   };
 
+  const handleChildNavMenu = (e) => {
+    navigate(e.target.id);
+  }
+
   return (
-    <AppBar sx={{backgroundColor: 'powderblue', color:'black', minHeight: '80px'}} position="static">
-      <Container sx={{margin:'auto'}} maxWidth="xl">
+    <AppBar sx={{ backgroundColor: mode.mode ? 'black' : 'white', boxShadow: 'none', color: 'black', minHeight: '80px' }} position="static">
+      <Container sx={{ margin: 'auto' }} maxWidth="xl">
         <Toolbar disableGutters>
-        <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              textDecoration: "none",
-              maxWidth: '135px'
-            }}
-          >
-            <img src={logo} alt='Company logo' />
-          </Typography>
+
+          {/* <Typography variant='h1' noWrap sx={{ color: mode.mode ? 'white' : 'black', mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily: 'cursive', textDecoration: 'none', fontSize: '1rem' }}>Jeroni</Typography> */}
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -88,13 +90,28 @@ function Navbar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {pages.map((page, index) => (
+                <MenuItem key={index} id={page.path} onClick={handleCloseNavMenu}>
+                  <Typography id={page.path} onClick={handleChildNavMenu} textAlign="center">{page.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box><Typography
+            variant="p"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              textDecoration: "none",
+            }}
+          >
+            <img src={logo} alt='Company logo' />
+          </Typography>
           <Typography
             variant="h5"
             noWrap
@@ -113,22 +130,25 @@ function Navbar() {
           >
             <img src={logo} alt='Company Logo' />
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', justifyContent: 'center' } }}>
+            {pages.map((page, index) => (
               <Button
-                key={page}
+                key={index}
+                id={page.path}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'black', display: 'block' }}
+                sx={{ my: 2, color: mode.mode ? 'white' : 'black', display: 'block' }}
               >
-                {page}
+                {page.label}
               </Button>
             ))}
           </Box>
-            
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-            <Switch defaultChecked />
+
+          <Box sx={{ flexGrow: 0, display: 'flex', }}>
+            <Tooltip title="Open settings"> 
+              <Switch checked={mode.mode} onClick={() => setMode({ type: 'SET_DARKMODE' })} />
             </Tooltip>
+            <Button sx={{ display: { xs: 'none', md: 'block' }, border: 'none', color: mode.mode ? 'white' : 'black', '&: hover': {border: 'none'} }} variant='outlined'>Login</Button>
+            <Button sx={{ backgroundColor: '#4540DB', display: { xs: 'none', md: 'block' }, border: 'none', color: 'white', '&: hover': {border: 'none'} }} variant='contained'>Register Now</Button>
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"

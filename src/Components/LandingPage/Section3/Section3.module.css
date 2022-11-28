@@ -1,0 +1,105 @@
+.section3 {
+  /* min-height: 100vh; */
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.section3 h1 {
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 59px;
+}
+.cardContainer {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  margin: auto;
+}
+.card {
+  background-color: white;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  margin: 0 10px 50px 0;
+  border: 1px solid;
+  border-radius: 10px;
+}
+.cardHeading {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  align-content: center;
+}
+.cardHeading img {
+  width: 45px;
+}
+.cardHeading div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 5px;
+  margin-bottom: 15px;
+}
+.cardHeading h3,
+p {
+  margin: 0;
+}
+.cardHeading h3 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+}
+.cardHeading p {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+}
+.card h1 {
+  font-weight: 400;
+  font-size: 25px;
+  text-align: left !important;
+  line-height: 29px;
+}
+.card h6 {
+  font-weight: 400;
+  font-size: 14px;
+}
+.card div:last-child {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+}
+.card button {
+  padding: 5px 15px;
+  border: none;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: blueviolet;
+  border-radius: 5px;
+  background-color: rgb(229, 229, 229);
+  cursor: pointer;
+  font-size: 16px;
+}
+.section3 > button{
+    padding: 10px 25px;
+    margin-bottom: 25px;
+    background-color: transparent;
+    border: 3px solid blueviolet;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    cursor: pointer;
+    font-size: 16px;
+    color: blueviolet;
+    border-radius: 5px;
+}
