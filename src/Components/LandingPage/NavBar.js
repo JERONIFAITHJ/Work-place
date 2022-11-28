@@ -147,8 +147,6 @@ function Navbar() {
             <Tooltip title="Open settings"> 
               <Switch checked={mode.mode} onClick={() => setMode({ type: 'SET_DARKMODE' })} />
             </Tooltip>
-            <Button sx={{ display: { xs: 'none', md: 'block' }, border: 'none', color: mode.mode ? 'white' : 'black', '&: hover': {border: 'none'} }} variant='outlined'>Login</Button>
-            <Button sx={{ backgroundColor: '#4540DB', display: { xs: 'none', md: 'block' }, border: 'none', color: 'white', '&: hover': {border: 'none'} }} variant='contained'>Register Now</Button>
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"

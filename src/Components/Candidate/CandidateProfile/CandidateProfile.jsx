@@ -75,17 +75,6 @@ function getStyles(name, personName, theme) {
   };
 }
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "SET_FILE":
-      return {
-        fileLocation: action.payload,
-      };
-    default:
-      return { fileLocation: "" };
-  }
-};
-
 function CandidateProfile() {
   const theme = useTheme();
   const [skillField, setSkills] = React.useState([]);
@@ -100,12 +89,9 @@ function CandidateProfile() {
   const educationRef = useRef();
   const domainRef = useRef();
   const [file, setFile] = useState("");
-  const [fileReducer, setFileReducer] = useReducer(reducer, "");
   const [edit, setEdit] = useState(false);
   const [percent, setPercent] = useState(0);
   const [pdfurl, setPdfurl] = React.useState("");
-  // const [candidateData, setCandidateData] = useState({});
-  // const [domain, setDomain] = useState("");
 
   const handleChange = (event) => {
     const {
@@ -125,7 +111,7 @@ function CandidateProfile() {
     console.log(resumeLink);
     const pushData = { ...data, userType: "candidate" };
     try {
-      await updateDoc(
+      await setDoc(
         doc(
           db,
           "userData",
@@ -133,6 +119,8 @@ function CandidateProfile() {
         ),
         {
           ...pushData,
+        },{
+          merge: true
         }
       );
       alert("Data submitted successfully!");
@@ -150,13 +138,13 @@ function CandidateProfile() {
         "userData",
         `${JSON.parse(localStorage.getItem("USERDATA")).uid}`
       );
-      // const docSnap = await getDoc(docRef);
       onSnapshot(docRef, (doc) => {
         if (doc.exists()) {
           setFetchedData(doc.data());
         }
       });
 
+      // const docSnap = await getDoc(docRef);
       // if (docSnap.exists()) {
       //   const data = docSnap.data();
       //   setFetchedData(data);
@@ -180,7 +168,6 @@ function CandidateProfile() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    let resumeUrl;
 
     if (nameRef.current.value <= 3) {
       showModal(true, "Name has to be at least 3 characters long!");
@@ -198,28 +185,10 @@ function CandidateProfile() {
       showModal(true, "Domain cannot be empty!");
       return;
     }
-    // const storageRef = ref(storage, `resume/${file.name}`);
-    // const uploadTask = uploadBytesResumable(storageRef, file);
-    // uploadTask.on(
-    //   "state_changed",
-    //   (snapshot) => {
-    //     const progress = Math.round(
-    //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-    //     );
-    //     setPercent(progress);
-    //   },
-    //   (error) => {
-    //     alert(error);
-    //   },
-    //   () => {
-    //     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-    //       setPdfurl(downloadURL);
-    //       resumeUrl = downloadURL;
-    //       console.log(resumeUrl);
-    //       setPercent(0);
-    //     });
-    //   }
-    // );
+    else if(skillField.length === 0){
+      showModal(true, "Skills cannot be empty!");
+      return;
+    }
     addData({
       candidateName: nameRef.current.value,
       candidateMail: emailRef.current.value,
@@ -254,7 +223,6 @@ function CandidateProfile() {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setPdfurl(downloadURL);
           console.log(downloadURL);
-          setPercent(0);
         });
       }
     );
@@ -264,7 +232,7 @@ function CandidateProfile() {
     const fileInfo = e.target.files[0];
     console.log(fileInfo);
     setFile(fileInfo);
-    setFileReducer({ type: "SET_FILE", payload: fileInfo });
+    setPercent(0);
   };
 
   return fetchedData ? (
@@ -418,17 +386,6 @@ function CandidateProfile() {
                 ))}
               </Select>
             </FormControl>
-
-            {/* <label htmlFor="file_upload">
-                <TextField
-                  type="file"
-                  id='file_upload'
-                  name="file_upload"
-                  onChange={fileChangeHandler}
-                  inputProps={{ accept: "application/pdf" }}
-                />
-                <Button sx={{marginTop: '10px'}} variant="outlined">Upload Resume</Button>
-              </label> */}
             {edit || !fetchedData.resumeLink ? (
               <FormControl
                 sx={{
@@ -442,22 +399,24 @@ function CandidateProfile() {
                 <label style={{ marginBottom: "10px" }} htmlFor="fileUpload">
                   Upload your Resume
                 </label>
-                <input
-                  disabled={!edit}
-                  type="file"
-                  onChange={fileChangeHandler}
-                  accept="application/pdf"
-                />
-                <Button
-                  sx={{ width: "30%" }}
-                  onClick={uploadResume}
-                  variant="outlined"
-                >
-                  Upload
-                </Button>
+                <div>
+                  <input
+                    disabled={!edit}
+                    type="file"
+                    onChange={fileChangeHandler}
+                    accept="application/pdf"
+                  />
+                  <Button
+                    sx={{ width: "30%" }}
+                    onClick={uploadResume}
+                    variant="outlined"
+                  >
+                    {`${percent > 0 && percent < 100 ? 'Uploading': percent === 0 ? 'Upload' : 'Uploaded'}`}
+                  </Button>
+                </div>
               </FormControl>
             ) : (
-              fetchedData?.resumeLink && (
+              edit || fetchedData?.resumeLink && (
                 <Button
                   sx={{ maxWidth: "30%", margin: "auto" }}
                   variant="outlined"

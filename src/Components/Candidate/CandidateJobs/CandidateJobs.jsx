@@ -29,17 +29,6 @@ function CandidateJobs() {
 
   const applyJob = async (job) => {
     try {
-      // const q = await query(
-      //   collection(db, "applications"),
-      //   where("candidateId", "==", savedUserId)
-      // );
-      // let applyCheck = [];
-      // const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      //   querySnapshot.forEach((doc) => {
-      //     applyCheck.push(doc.data());
-      //   });
-      // });
-      // console.log(applyCheck);
 
       //Fetching all the applications of this user
       const q = query(
@@ -87,8 +76,6 @@ function CandidateJobs() {
     fetchAllJobs();
   }, []);
 
-  // useEffect
-
   return jobs && jobs.length > 0 ? (
     <div style={{ backgroundColor: "aliceblue", height: "100%" }}>
       <h2 style={{ paddingTop: "3vh", marginTop: "0" }}>All availabe jobs</h2>
@@ -110,12 +97,6 @@ function CandidateJobs() {
               <h3>{val.jobTitle}</h3>
               <div className={classes.jobData}>
                 <div>
-                  {/* <div style={{ textAlign: 'left' }}>
-                  <p>Domain: {jobs[2].domain}</p>
-                  <p>Experience: {jobs[2].experience}</p>
-                  <p>Job Description: {jobs[2].jobDescription}</p>
-                  <p>Skills Required: {jobs[2].skillsRequired.join(', ')}</p>
-                </div> */}
                   <table>
                     <tbody>
                       <tr>
@@ -158,7 +139,7 @@ function CandidateJobs() {
         })}
       </Grid>
     </div>
-  ) : (
+  ) : jobs && jobs.length === 0 ? <p>No Jobs at the moment</p> : (
     <p>Loading Jobs...</p>
   );
 }
