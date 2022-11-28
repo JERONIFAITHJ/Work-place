@@ -1,12 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
 import NavPage from './Pages/NavPage';
+import UserInfoContextComponent from './Components/Context/UserInfoContext';
+import DarkModeContextComponent from './Components/Context/DarkModeContext';
 
 function App() {
   return (
-    <div className="App">
-      <NavPage />
-    </div>
+    <DarkModeContextComponent>
+      <UserInfoContextComponent>
+        <div className="App">
+          <NavPage />
+        </div>
+      </UserInfoContextComponent>
+    </DarkModeContextComponent>
   );
 }
 

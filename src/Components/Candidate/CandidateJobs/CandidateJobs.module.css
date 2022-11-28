@@ -1,0 +1,29 @@
+.jobData{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.jobData ul{
+    list-style: none;
+    padding-left: 0 !important;
+}
+.jobData ul p{
+    display: inline-block;
+}
+.jobData ul li{
+    display: inline-block;
+    margin-right: 10px;
+}
+table td{
+    text-align: left;
+    padding-right: 10px;
+}
+.loca{}
+@media only screen and (max-width: 700px){
+    .jobData{
+        flex-direction: column;
+    }
+    .loca{
+        display: none;
+    }
+}
