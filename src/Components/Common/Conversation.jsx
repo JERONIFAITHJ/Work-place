@@ -97,7 +97,8 @@ function Conversation({ origin }) {
   }
 
   return (
-    <Grid sx={{marginTop: '0 !important', backgroundImage: 'linear-gradient(to right, #ACC8E5, #ACC8E5)',}} container>
+    <div style={{minHeight: '100vh', backgroundImage: 'linear-gradient(to right, #ACC8E5, #ACC8E5)',}}>
+    <Grid sx={{marginTop: '0 !important', }} container>
       <Grid
         md={4}
         xs={12}
@@ -125,6 +126,7 @@ function Conversation({ origin }) {
         />
       </Grid>
     </Grid>
+    </div>
   );
 }
 

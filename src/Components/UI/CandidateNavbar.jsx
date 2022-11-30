@@ -92,6 +92,7 @@ function CandidateNavbar({ children }) {
           <Container
             sx={{
               backgroundColor: mode.mode ? "black" : "white",
+              boxShadow: 'none !important'
               // backgroundColor: 'black'
             }}
             maxWidth="xl">
