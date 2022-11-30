@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import LastMessage from "./LastMessage";
 import MessageArea from "./MessageArea";
 import {
@@ -12,9 +12,10 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { v4 as uuidv4 } from "uuid";
+import { DarkModeContext } from "../Context/DarkModeContext";
 
 function Conversation({ origin }) {
-  console.log("From conversation: ", origin);
+  const [mode, setMode]= useContext(DarkModeContext);
   const [mobileView, setMobileView] = useState(true);
   const [allLastMessages, setAllLastMessages] = useState([]);
   const [allConversation, setAllConversation] = useState(null);
@@ -94,6 +95,17 @@ function Conversation({ origin }) {
   //Set mobile view
   const changeView = () => {
     setMobileView(prevState => !prevState);
+    hideNavbar(false);
+  }
+
+  //Hide Appbar
+  const hideNavbar = (status) => {
+    if(status){
+      setMode({ type: 'HIDE_NAVBAR' });
+    }
+    else{
+      setMode({ type: 'SHOW_NAVBAR' });
+    }
   }
 
   return (
@@ -123,6 +135,7 @@ function Conversation({ origin }) {
           postConversation={postConversation}
           origin={`${origin}`}
           changeView={changeView}
+          hideNavbar={hideNavbar}
         />
       </Grid>
     </Grid>

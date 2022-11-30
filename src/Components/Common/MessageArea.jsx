@@ -1,19 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { DarkModeContext } from "../Context/DarkModeContext";
 
 export default function MessageArea({
   allConversation,
   postConversation,
   origin,
   changeView,
+  hideNavbar
 }) {
   const [messageHolder, setMessageHolder] = useState("");
   const [head] = allConversation || [];
+  const [mode, setMode]= useContext(DarkModeContext);
 
   const messageHandler = (e) => {
     setMessageHolder(e.target.value);
+    hideNavbar(true);
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      hideNavbar(false);
+    }, 1000)
+
+    return () => {
+      clearTimeout(timer);
+    }
+  }, [messageHandler])
 
   return allConversation ? (
     <div style={{ height: "92vh" }}>
@@ -134,6 +148,7 @@ export default function MessageArea({
             onClick={() => {
               messageHolder.length > 0 && postConversation(messageHolder);
               setMessageHolder("");
+              hideNavbar(false);
             }}
             variant="outlined"
           >

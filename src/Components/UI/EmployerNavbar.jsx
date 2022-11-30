@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
@@ -20,6 +21,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 // import {DarkmodeContext} from "../context/Darkmode";
+import { DarkModeContext } from "../Context/DarkModeContext";
 import { auth } from "../../firebaseConfig";
 import { Switch } from "@mui/material";
 const pages = [
@@ -35,12 +37,12 @@ const pages = [
   },
   {
     label: "Applicants",
-    key: 'applicants',
+    key: "applicants",
     icon: <BackupTableIcon />,
   },
   {
     label: "Conversation",
-    key: 'conversation',
+    key: "conversation",
     icon: <SmsIcon />,
   },
 ];
@@ -48,7 +50,7 @@ const pages = [
 function EmployerNavbar({ children }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-//   const [state,dispatch] = React.useContext(DarkmodeContext);
+  const [mode, setMode] = React.useContext(DarkModeContext);
   const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   const handleOpenNavMenu = (event) => {
@@ -85,13 +87,12 @@ function EmployerNavbar({ children }) {
       >
         <AppBar position="static">
           <Container
-
             sx={{
-            //   backgroundColor: state.darkMode ? "#1a1a1a" : "#fff",
-            backgroundColor: 'black'
+              //   backgroundColor: state.darkMode ? "#1a1a1a" : "#fff",
+              backgroundColor: "black",
             }}
-
-            maxWidth="xl">
+            maxWidth="xl"
+          >
             <Toolbar disableGutters>
               <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
               <Typography
@@ -145,10 +146,13 @@ function EmployerNavbar({ children }) {
                     <MenuItem key={page.key} onClick={() => reRoute(page.key)}>
                       <Typography
                         sx={{
-                        //   color: state.darkMode ? "#fff" : "#000",
-                        color: 'whitesmoke'
+                          //   color: state.darkMode ? "#fff" : "#000",
+                          color: "whitesmoke",
                         }}
-                        textAlign="center">{page.label}</Typography>
+                        textAlign="center"
+                      >
+                        {page.label}
+                      </Typography>
                     </MenuItem>
                   ))}
                 </Menu>
@@ -183,18 +187,18 @@ function EmployerNavbar({ children }) {
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="toggle">
                   <Switch
-                    //  checked={state.darkMode}
-                    //  onChange={() => {
-                    //    state.darkMode ? dispatch({ type: 'Make_light' }) :
-                    //    dispatch({ type: "Make_dark" })
-                    //  }}
+                  //  checked={state.darkMode}
+                  //  onChange={() => {
+                  //    state.darkMode ? dispatch({ type: 'Make_light' }) :
+                  //    dispatch({ type: "Make_dark" })
+                  //  }}
                   />
                 </Tooltip>
                 <Tooltip title="logout">
                   <Button
                     sx={{
-                    //   color: state.darkMode ? "#fff" : "#000",
-                    color: 'white'
+                      //   color: state.darkMode ? "#fff" : "#000",
+                      color: "white",
                     }}
                     onClick={LogoutFun}
                   >
@@ -207,38 +211,40 @@ function EmployerNavbar({ children }) {
           <div></div>
         </AppBar>
       </Box>
-      <Box
-        display={{
-          xs: "block",
-          md: "none",
-          position: "fixed",
-          bottom: "0px",
-          width: "100%",
-          background: "white",
-          zIndex: "2",
-        }}
-      >
-        <Box>
-          <BottomNavigation
-            showLabels
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-          >
-            {pages.map((page) => {
-              return (
-                <BottomNavigationAction
-                  key={page.key}
-                  onClick={() => reRoute(page.key)}
-                  label={page.label}
-                  icon={page.icon}
-                />
-              );
-            })}
-          </BottomNavigation>
+      {!mode.typing && (
+        <Box
+          display={{
+            xs: "block",
+            md: "none",
+            position: "fixed",
+            bottom: "0px",
+            width: "100%",
+            background: "white",
+            zIndex: "2",
+          }}
+        >
+          <Box>
+            <BottomNavigation
+              showLabels
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+            >
+              {pages.map((page) => {
+                return (
+                  <BottomNavigationAction
+                    key={page.key}
+                    onClick={() => reRoute(page.key)}
+                    label={page.label}
+                    icon={page.icon}
+                  />
+                );
+              })}
+            </BottomNavigation>
+          </Box>
         </Box>
-      </Box>
+      )}
       {children}
     </>
   );

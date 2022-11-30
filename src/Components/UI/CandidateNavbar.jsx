@@ -205,7 +205,7 @@ function CandidateNavbar({ children }) {
           <div></div>
         </AppBar>
       </Box>
-      <Box
+      {!mode.typing && <Box
         display={{
           xs: "block",
           md: "none",
@@ -236,7 +236,7 @@ function CandidateNavbar({ children }) {
             })}
           </BottomNavigation>
         </Box>
-      </Box>
+      </Box>}
       <div>
       {children}
       </div>
