@@ -23,7 +23,8 @@ import Person4Icon from "@mui/icons-material/Person4";
 import WorkIcon from "@mui/icons-material/Work";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebaseConfig";
-// import {DarkmodeContext} from "../context/Darkmode";
+import logo from '../../Assets/mainLogo2.png'
+import {DarkModeContext} from '../Context/DarkModeContext'
 import { Switch } from "@mui/material";
 
 const pages = [
@@ -52,7 +53,7 @@ const pages = [
 function CandidateNavbar({ children }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  // const [state,dispatch] = React.useContext(DarkmodeContext);
+  const [mode,setMode] = React.useContext(DarkModeContext);
   const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   const handleOpenNavMenu = (event) => {
@@ -87,15 +88,14 @@ function CandidateNavbar({ children }) {
           display: { xs: "none", md: "block" },
         }}
       >
-        <AppBar position="fixed">
+        <AppBar position="static">
           <Container
             sx={{
-              // backgroundColor: state.darkMode ? "#232323" : "#fff",
-              backgroundColor: 'black'
+              backgroundColor: mode.mode ? "black" : "white",
+              // backgroundColor: 'black'
             }}
             maxWidth="xl">
             <Toolbar disableGutters>
-              <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
               <Typography
                 variant="h6"
                 noWrap
@@ -111,7 +111,7 @@ function CandidateNavbar({ children }) {
                   textDecoration: "none",
                 }}
               >
-                LOGO
+                <img src={logo} alt='logo' />
               </Typography>
 
               <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -174,8 +174,7 @@ function CandidateNavbar({ children }) {
                   <MenuItem key={page.key} onClick={() => reRoute(page.key)}>
                     <Typography
                       sx={{
-                        // color: state.darkMode ? "#fff" : "#000",
-                        color: 'white'
+                        color: mode.mode ? 'white' : 'black', 
                       }}
                       textAlign="center">{page.label}</Typography>
                   </MenuItem>
@@ -185,18 +184,14 @@ function CandidateNavbar({ children }) {
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="toggle">
                   <Switch
-                    // checked={state.darkMode}
-                    // onChange={() => {
-                    //   state.darkMode ? dispatch({ type: 'Make_light' }) :
-                    //   dispatch({ type: "Make_dark" })
-                    // }}
+                    checked={mode.mode}
+                    onClick={() => setMode({ type: 'SET_DARKMODE' })}
                   />
                 </Tooltip>
                 <Tooltip title="logout">
                   <Button
                     sx={{
-                      // color: state.darkMode ? "#fff" : "#000",
-                      color: 'whitesmoke'
+                      color: mode.mode ? "white" : "black",
                     }}
                     onClick={LogoutFun}
                   >
@@ -241,9 +236,7 @@ function CandidateNavbar({ children }) {
           </BottomNavigation>
         </Box>
       </Box>
-      <div style={{
-        marginTop: "64px",
-      }} >
+      <div>
       {children}
       </div>
     </>

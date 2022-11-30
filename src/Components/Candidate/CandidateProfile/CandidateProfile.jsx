@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, { useContext, useEffect, useReducer, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import classes from "./CandidateProfile.module.css";
@@ -12,6 +12,7 @@ import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Chip from "@mui/material/Chip";
 import { useTheme } from "@mui/material/styles";
+import { DarkModeContext } from '../../Context/DarkModeContext';
 import {
   collection,
   setDoc,
@@ -76,6 +77,7 @@ function getStyles(name, personName, theme) {
 }
 
 function CandidateProfile() {
+  const [mode, setMode] = useContext(DarkModeContext);
   const theme = useTheme();
   const [skillField, setSkills] = React.useState([]);
   const [err, setErr] = useState({
@@ -141,6 +143,7 @@ function CandidateProfile() {
       onSnapshot(docRef, (doc) => {
         if (doc.exists()) {
           setFetchedData(doc.data());
+          setPdfurl(doc.data().resumeLink);
         }
       });
 
@@ -236,8 +239,8 @@ function CandidateProfile() {
   };
 
   return fetchedData ? (
-    <div className={classes.onboarding}>
-      <h1>Welcome to work place!</h1>
+    <div style={{ backgroundColor: mode.mode ? '#0d1117' : 'white'}} className={classes.onboarding}>
+      <h1 style={{color: mode.mode ? 'white' : 'black', marginTop: '0', paddingTop: '10px'}}>Welcome to work place!</h1>
       {err.status && <ModalWindow show={err.status} message={err.message} />}
       <Grid container sx={{ width: "100%", margin: "auto" }} spacing={2}>
         <Grid sx={{ width: "100%", paddingLeft: "0 !important" }} xs={12} item>
@@ -264,6 +267,7 @@ function CandidateProfile() {
           >
             <TextField
               id="outlined-basic"
+              // sx={{ input: { outline: '1px solid white !important', borderRadius: '5px', color: 'white !important'} }}
               type="text"
               label="Name"
               placeholder="Enter your name here"
@@ -392,7 +396,6 @@ function CandidateProfile() {
                   border: "1px solid black",
                   borderRadius: "5px",
                   padding: "10px",
-                  opacity: !edit ? "0.5" : "1",
                 }}
                 fullWidth
               >
@@ -401,7 +404,6 @@ function CandidateProfile() {
                 </label>
                 <div>
                   <input
-                    disabled={!edit}
                     type="file"
                     onChange={fileChangeHandler}
                     accept="application/pdf"
@@ -416,7 +418,7 @@ function CandidateProfile() {
                 </div>
               </FormControl>
             ) : (
-              edit || fetchedData?.resumeLink && (
+                fetchedData?.resumeLink && (
                 <Button
                   sx={{ maxWidth: "30%", margin: "auto" }}
                   variant="outlined"

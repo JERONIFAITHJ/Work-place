@@ -30,7 +30,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function JobTable({ columnNames, jobDetails }) {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer sx={{marginTop: '10px'}} component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>

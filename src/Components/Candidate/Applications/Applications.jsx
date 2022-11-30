@@ -34,7 +34,10 @@ function Applications() {
   }, []);
 
   return fetchedJobs && fetchedJobs.length > 0 ? (
-    <JobTable columnNames={columnNames} jobDetails={fetchedJobs} />
+    <div>
+      <h1>Your Applications</h1>
+      <JobTable columnNames={columnNames} jobDetails={fetchedJobs} />
+    </div>
   ) : fetchedJobs && fetchedJobs.length === 0 ? (
     <p>No jobs applied!</p>
   ) : (

@@ -91,12 +91,17 @@ function Conversation({ origin }) {
     }
   };
 
+  //Set mobile view
+  const changeView = () => {
+    setMobileView(prevState => !prevState);
+  }
+
   return (
-    <Grid container>
+    <Grid sx={{marginTop: '0 !important', backgroundImage: 'linear-gradient(to right, #ACC8E5, #ACC8E5)',}} container>
       <Grid
-        sm={4}
+        md={4}
         xs={12}
-        sx={{ display: { xs: mobileView ? "block" : "none", sm: "block" } }}
+        sx={{ display: { xs: mobileView ? "block" : "none", md: "block" } }}
         item
       >
         <LastMessage
@@ -106,15 +111,17 @@ function Conversation({ origin }) {
         />
       </Grid>
       <Grid
-        sm={8}
+        lg={8}
+        md={8}
         xs={12}
-        sx={{ display: { xs: mobileView ? "none" : "block", sm: "block" } }}
+        sx={{ display: { xs: mobileView ? "none" : "block", md: "block" }, margin: 'auto' }}
         item
       >
         <MessageArea
           allConversation={allConversation}
           postConversation={postConversation}
           origin={`${origin}`}
+          changeView={changeView}
         />
       </Grid>
     </Grid>

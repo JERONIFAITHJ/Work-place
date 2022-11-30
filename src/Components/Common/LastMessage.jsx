@@ -20,14 +20,16 @@ export default function LastMessage({
         flexDirection: "column",
         justifyContent: "center",
         gap: "20px",
+        color: '#112A46'
       }}
       container
     >
+      <h1>Your conversations</h1>
       {messages.map((item, index) => {
         return (
           <Grid
             sx={{
-              border: "3px solid lavender",
+              border: "3px solid #112A46",
               borderRadius: "10px",
               padding: "10px",
               cursor: "pointer",
