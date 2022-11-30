@@ -13,21 +13,23 @@ export default function MessageArea({
   const [messageHolder, setMessageHolder] = useState("");
   const [head] = allConversation || [];
   const [mode, setMode]= useContext(DarkModeContext);
+  const [focus, setFocus] = useState(false);
 
   const messageHandler = (e) => {
     setMessageHolder(e.target.value);
-    hideNavbar(true);
+    // hideNavbar(true);
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    console.log('run');
+    if(!focus){
       hideNavbar(false);
-    }, 1000)
-
-    return () => {
-      clearTimeout(timer);
+      return;
     }
-  }, [messageHandler])
+    else{
+      hideNavbar(true);
+    }
+  }, [focus])
 
   return allConversation ? (
     <div style={{ height: "92vh" }}>
@@ -135,6 +137,8 @@ export default function MessageArea({
             }}
             placeholder="Text goes here..."
             onChange={messageHandler}
+            onFocus={() => setFocus(true)}
+            onBlur={() => setFocus(false)}
             value={messageHolder}
             type="text"
           />
