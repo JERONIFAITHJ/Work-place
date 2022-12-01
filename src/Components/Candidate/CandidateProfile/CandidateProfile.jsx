@@ -144,6 +144,7 @@ function CandidateProfile() {
         if (doc.exists()) {
           setFetchedData(doc.data());
           setPdfurl(doc.data().resumeLink);
+          setPercent(doc.data().resumeLink ? 100: 0);
         }
       });
 
@@ -209,6 +210,7 @@ function CandidateProfile() {
       return;
     }
     console.log(file);
+    setPercent(0);
     const storageRef = ref(storage, `resume/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
     uploadTask.on(
@@ -225,6 +227,7 @@ function CandidateProfile() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setPdfurl(downloadURL);
+          setEdit(true);
           console.log(downloadURL);
         });
       }
@@ -239,8 +242,8 @@ function CandidateProfile() {
   };
 
   return fetchedData ? (
-    <div style={{ backgroundColor: mode.mode ? '#0d1117' : 'white'}} className={classes.onboarding}>
-      <h1 style={{color: mode.mode ? 'white' : 'black', marginTop: '0', paddingTop: '10px'}}>Welcome to work place!</h1>
+    <div style={{ paddingBottom: '30px', boxSizing: 'border-box', backgroundColor: mode.mode ? '#0d1117' : 'white'}} className={classes.onboarding}>
+      <h1 style={{color: mode.mode ? 'white' : 'black', marginTop: '0', paddingTop: '10px'}}>Profile</h1>
       {err.status && <ModalWindow show={err.status} message={err.message} />}
       <Grid container sx={{ width: "100%", margin: "auto" }} spacing={2}>
         <Grid sx={{ width: "100%", paddingLeft: "0 !important" }} xs={12} item>
@@ -420,7 +423,7 @@ function CandidateProfile() {
             ) : (
                 fetchedData?.resumeLink && (
                 <Button
-                  sx={{ maxWidth: "30%", margin: "auto" }}
+                  sx={{ width: "100%", margin: "auto" }}
                   variant="outlined"
                 >
                   <a href={fetchedData?.resumeLink} target="_blank">
@@ -443,7 +446,7 @@ function CandidateProfile() {
       {!edit && (
         <Button
           onClick={() => setEdit((prevState) => !prevState)}
-          sx={{ width: "100px", marginTop: "5vh" }}
+          sx={{ width: "100px", margin: "5vh" }}
           variant="contained"
         >
           Edit

@@ -99,7 +99,7 @@ export default function JobForm({ jobData, disableHandler }) {
       await setDoc(doc(db, "jobData", job_ID), {
         jobId: job_ID,
         ...data,
-        employerName: JSON.parse(localStorage.getItem('USERDATA')).displayName,
+        employerName: JSON.parse(localStorage.getItem("USERDATA")).displayName,
         employerId: JSON.parse(localStorage.getItem("USERDATA")).uid,
         dateAdded: new Date(),
       });
@@ -154,7 +154,13 @@ export default function JobForm({ jobData, disableHandler }) {
   };
 
   return jobInfo ? (
-    <Grid xs={12} lg={9} md={9} item>
+    <Grid
+      sx={{ paddingBottom: "100px", minHeight: "100vh" }}
+      xs={12}
+      lg={9}
+      md={9}
+      item
+    >
       <h1>Job Details</h1>
       <Box
         component="form"
@@ -305,30 +311,32 @@ export default function JobForm({ jobData, disableHandler }) {
             ))}
           </Select>
         </FormControl>
-        <Button
-          sx={{
-            width: "200px !important",
-            color: "lightgreen",
-            border: "1px solid lightgreen",
-            "&: hover": { color: "lightskyblue" },
-          }}
-          type="submit"
-          variant="outlined"
-        >
-          Submit
-        </Button>
-        <Button
-          sx={{
-            width: "200px !important",
-            color: "lightcoral",
-            border: "1px solid lightcoral",
-            "&: hover": { color: "lightskyblue" },
-          }}
-          onClick={() => disableHandler()}
-          variant="outlined"
-        >
-          Cancel
-        </Button>
+        <div style={{margin: 'auto', marginTop: '2vh', display: 'flex', flexWrap: 'nowrap', gap: '5px', justifyContent: 'center'}}>
+          <Button
+            sx={{
+              width: "200px !important",
+              color: "lightgreen",
+              border: "1px solid lightgreen",
+              "&: hover": { color: "lightskyblue" },
+            }}
+            type="submit"
+            variant="outlined"
+          >
+            Submit
+          </Button>
+          <Button
+            sx={{
+              width: "200px !important",
+              color: "lightcoral",
+              border: "1px solid lightcoral",
+              "&: hover": { color: "lightskyblue" },
+            }}
+            onClick={() => disableHandler()}
+            variant="outlined"
+          >
+            Cancel
+          </Button>
+        </div>
       </Box>
     </Grid>
   ) : (

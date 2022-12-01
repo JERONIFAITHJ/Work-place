@@ -20,7 +20,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
-// import {DarkmodeContext} from "../context/Darkmode";
+import logo from '../../Assets/mainLogo2.png'
 import { DarkModeContext } from "../Context/DarkModeContext";
 import { auth } from "../../firebaseConfig";
 import { Switch } from "@mui/material";
@@ -88,13 +88,13 @@ function EmployerNavbar({ children }) {
         <AppBar position="static">
           <Container
             sx={{
-              //   backgroundColor: state.darkMode ? "#1a1a1a" : "#fff",
-              backgroundColor: "black",
+              backgroundColor: mode.mode ? "black" : "white",
+              boxShadow: 'none !important'
+              // backgroundColor: 'black'
             }}
             maxWidth="xl"
           >
             <Toolbar disableGutters>
-              <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
               <Typography
                 variant="h6"
                 noWrap
@@ -110,7 +110,7 @@ function EmployerNavbar({ children }) {
                   textDecoration: "none",
                 }}
               >
-                LOGO
+                <img src={logo} alt='logo' />
               </Typography>
 
               <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -186,12 +186,9 @@ function EmployerNavbar({ children }) {
 
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="toggle">
-                  <Switch
-                  //  checked={state.darkMode}
-                  //  onChange={() => {
-                  //    state.darkMode ? dispatch({ type: 'Make_light' }) :
-                  //    dispatch({ type: "Make_dark" })
-                  //  }}
+                <Switch
+                    checked={mode.mode}
+                    onClick={() => setMode({ type: 'SET_DARKMODE' })}
                   />
                 </Tooltip>
                 <Tooltip title="logout">

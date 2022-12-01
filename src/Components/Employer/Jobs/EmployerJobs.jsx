@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classes from "./EmployerJobs.module.css";
 import JobForm from "./JobForm";
 import { Button, Grid } from "@mui/material";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
+import { DarkModeContext } from "../../Context/DarkModeContext";
 
 function EmployerJobs() {
   const [jobPost, setJobPost] = useState(false);
   const [disable, setDisable] = useState(false);
   const [fetchedJobs, setFetchedJobs] = useState();
   const [populate, setPopulate] = useState();
-
+  const [mode, setMode] = useContext(DarkModeContext);
   const postJobHandler = (job) => {
     setJobPost((prevState) => true);
     setDisable(true);
@@ -62,14 +63,17 @@ function EmployerJobs() {
   }, []);
 
   return (
-    <div className={classes.jobs}>
+    <div style={{backgroundColor: mode.mode ? '#0d1117': 'white', minHeight: '100vh '}} className={classes.jobs}>
       <Grid container spacing={1}>
         <Grid xs={12} md={3} lg={3} item>
           <Button
             sx={{
               padding: "15px 15px",
               width: { xl: "80%", lg: "80%", md: "80%", sm: "80%", xs: "95%" },
-              margin: 'auto'
+              margin: 'auto',
+              color: mode.mode ? 'white' :'black' ,
+              border: '1px solid',
+              '&: hover': {backgroundColor: 'transparent', border: '2px solid', padding: '14px 15px'}
             }}
             disabled={disable}
             onClick={() => postJobHandler(null)}
@@ -92,9 +96,11 @@ function EmployerJobs() {
                       sm: "80%",
                       xs: "95%",
                     },
-                    border: "2px solid",
+                    color: mode.mode ? 'white' :'black' ,
+                    border: "1px solid",
                     margin: 'auto',
                     marginTop: "5vh",
+                    '&: hover': {backgroundColor: 'transparent', border: '4px solid', padding: '12px 15px'}
                   }}
                   disabled={disable}
                   onClick={() => postJobHandler(job)}

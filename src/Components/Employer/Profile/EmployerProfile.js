@@ -173,7 +173,7 @@ function EmployerProfile({ isEdit = false }) {
 
   return (
     fetchedData ?
-      (<div className={classes.onboarding}>
+      (<div style={{paddingBottom : '100px'}} className={classes.onboarding}>
         <h1>Welcome to work place</h1>
         {err.status && <ModalWindow show={err.status} message={err.message} />}
         <Grid container sx={{ width: "100%", margin: "auto" }} spacing={2}>
