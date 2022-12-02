@@ -1,5 +1,6 @@
 import { Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { DarkModeContext } from "../Context/DarkModeContext";
 
 export default function LastMessage({
   messages,
@@ -7,6 +8,7 @@ export default function LastMessage({
   origin,
 })
 {
+  const [mode] = useContext(DarkModeContext);
   // const [allInteractions, setAllInteractions] = useState([...new Set (messages.map(item => item[`${origin}Id`]))]);
   // console.log([...new Set (messages.map(item => item))]);
   // useEffect(() => {
@@ -24,12 +26,12 @@ export default function LastMessage({
       }}
       container
     >
-      <h1>Your conversations</h1>
+      <h1 style={{color: mode.mode ? 'white' : 'black'}}>Your conversations</h1>
       {messages.map((item, index) => {
         return (
           <Grid
             sx={{
-              border: "3px solid #112A46",
+              border: mode.mode ? '3px solid black' :  "3px solid #112A46",
               borderRadius: "10px",
               padding: "10px",
               cursor: "pointer",
@@ -38,7 +40,7 @@ export default function LastMessage({
             onClick={() => selectedConversation(item)}
             item
           >
-            <h3 style={{ margin: "0", marginBottom: "15px" }}>
+            <h3 style={{ margin: "0", marginBottom: "15px", color: mode.mode ? 'white' : 'black' }}>
               {origin === "candidate" ? item.employerName : item.candidateName}
             </h3>
             <div
@@ -46,6 +48,7 @@ export default function LastMessage({
                 display: "flex",
                 justifyContent: "space-between",
                 padding: "0 10px",
+                color: mode.mode ? 'white' : 'black'
               }}
             >
               <p style={{ textLign: "left" }}>

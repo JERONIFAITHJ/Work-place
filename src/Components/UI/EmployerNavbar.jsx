@@ -20,7 +20,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
-import logo from '../../Assets/mainLogo2.png'
+import logo from "../../Assets/mainLogo2.png";
 import { DarkModeContext } from "../Context/DarkModeContext";
 import { auth } from "../../firebaseConfig";
 import { Switch } from "@mui/material";
@@ -89,7 +89,7 @@ function EmployerNavbar({ children }) {
           <Container
             sx={{
               backgroundColor: mode.mode ? "black" : "white",
-              boxShadow: 'none !important'
+              boxShadow: "none !important",
               // backgroundColor: 'black'
             }}
             maxWidth="xl"
@@ -110,7 +110,7 @@ function EmployerNavbar({ children }) {
                   textDecoration: "none",
                 }}
               >
-                <img src={logo} alt='logo' />
+                <img src={logo} alt="logo" />
               </Typography>
 
               <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -146,8 +146,7 @@ function EmployerNavbar({ children }) {
                     <MenuItem key={page.key} onClick={() => reRoute(page.key)}>
                       <Typography
                         sx={{
-                          //   color: state.darkMode ? "#fff" : "#000",
-                          color: "whitesmoke",
+                          color: mode.mode ? "white" : "black",
                         }}
                         textAlign="center"
                       >
@@ -179,23 +178,27 @@ function EmployerNavbar({ children }) {
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                 {pages.map((page) => (
                   <MenuItem key={page.key} onClick={() => reRoute(page.key)}>
-                    <Typography textAlign="center">{page.label}</Typography>
+                    <Typography
+                      sx={{ color: mode.mode ? "white" : "black" }}
+                      textAlign="center"
+                    >
+                      {page.label}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Box>
 
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="toggle">
-                <Switch
+                  <Switch
                     checked={mode.mode}
-                    onClick={() => setMode({ type: 'SET_DARKMODE' })}
+                    onClick={() => setMode({ type: "SET_DARKMODE" })}
                   />
                 </Tooltip>
                 <Tooltip title="logout">
                   <Button
                     sx={{
-                      //   color: state.darkMode ? "#fff" : "#000",
-                      color: "white",
+                      color: mode.mode ? "white" : "black",
                     }}
                     onClick={LogoutFun}
                   >

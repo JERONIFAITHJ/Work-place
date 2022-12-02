@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useContext } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,6 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { DarkModeContext } from "../../Context/DarkModeContext";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -29,14 +31,20 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function JobTable({ columnNames, jobDetails }) {
+  const [mode] = useContext(DarkModeContext);
   return (
-    <TableContainer sx={{marginTop: '10px'}} component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
+    <div style={{minHeight: '100vh', padding:'20px 0 100px 0',backgroundColor: mode.mode ? '#0d1117': 'white'}}>
+      <h1 style={{marginTop: '0', color: mode.mode ? 'white' : 'black'}}>Application Details</h1>
+      <TableContainer
+        sx={{ marginBottom: "100px", paddingTop: "10px", backgroundColor: mode.mode ? 'black':'white' }}
+        component={Paper}
+      >
+        <Table sx={{ minWidth: 700}} aria-label="customized table">
+          <TableHead sx={{backgroundColor: mode.mode ? 'black':'white', color: mode.mode ? 'white':'black'}}>
           <TableRow>
             {columnNames.map((item) => {
               return (
-                <StyledTableCell key={item.key} align="center">
+                <StyledTableCell sx={{backgroundColor: mode.mode ? 'black':'white'}} key={item.key} align="center">
                   {item.title}
                 </StyledTableCell>
               );
@@ -47,21 +55,22 @@ export default function JobTable({ columnNames, jobDetails }) {
           {jobDetails.map((item, index) => {
             return (
               <StyledTableRow key={index}>
-                <StyledTableCell align="center">
+                <StyledTableCell sx={{color: mode.mode ? 'white':'black'}} align="center">
                   {item.employerName}
                 </StyledTableCell>
-                <StyledTableCell align="center">
+                <StyledTableCell sx={{color: mode.mode ? 'white':'black'}} align="center">
                   {item.jobTitle}
                 </StyledTableCell>
-                <StyledTableCell align="center">
+                <StyledTableCell sx={{color: mode.mode ? 'white':'black'}} align="center">
                   {item.location}
                 </StyledTableCell>
-                <StyledTableCell align="center">{item.status}</StyledTableCell>
+                <StyledTableCell sx={{color: mode.mode ? 'white':'black'}} align="center">{item.status}</StyledTableCell>
               </StyledTableRow>
             );
           })}
         </TableBody>
       </Table>
     </TableContainer>
+    </div>
   );
 }

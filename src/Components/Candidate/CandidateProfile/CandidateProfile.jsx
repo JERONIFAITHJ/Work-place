@@ -30,6 +30,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 
+
 const skills = [
   { id: "1", skill: "HTML5" },
   { id: "2", skill: "CSS" },
@@ -94,6 +95,8 @@ function CandidateProfile() {
   const [edit, setEdit] = useState(false);
   const [percent, setPercent] = useState(0);
   const [pdfurl, setPdfurl] = React.useState("");
+
+   console.log('RUN');
 
   const handleChange = (event) => {
     const {
@@ -162,7 +165,6 @@ function CandidateProfile() {
 
   useEffect(() => {
     getData();
-    console.log(fetchedData?.resumeLink);
   }, []);
 
   const showModal = (isError, errorText) => {
@@ -189,7 +191,7 @@ function CandidateProfile() {
       showModal(true, "Domain cannot be empty!");
       return;
     }
-    else if(skillField.length === 0){
+    else if(fetchedData.candidateSkills.length === 0){
       showModal(true, "Skills cannot be empty!");
       return;
     }
@@ -200,7 +202,7 @@ function CandidateProfile() {
       candidateExperience: experienceRef.current.value,
       candidateEducation: educationRef.current.value,
       candidateDomain: domainRef.current.value,
-      candidateSkills: skillField,
+      candidateSkills: fetchedData.candidateSkills,
       resumeLink: pdfurl,
     });
   };
@@ -278,6 +280,7 @@ function CandidateProfile() {
               value={fetchedData.candidateName}
               onChange={(e) =>
                 setFetchedData((state) => {
+                  // console.log(fetchedData?.candidateSkills.join());
                   return { ...state, candidateName: e.target.value };
                 })
               }

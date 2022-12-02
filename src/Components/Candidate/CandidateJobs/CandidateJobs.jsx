@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { db } from "../../../firebaseConfig";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { Button, Grid } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import classes from "./CandidateJobs.module.css";
 import { doc, setDoc, getDocs } from "firebase/firestore";
+import { DarkModeContext } from "../../Context/DarkModeContext";
 
 function CandidateJobs() {
+  const [mode] = useContext(DarkModeContext);
   const [jobs, setJobs] = useState();
   const savedUserId = JSON.parse(localStorage.getItem("USERDATA")).uid;
   const savedUserName = JSON.parse(localStorage.getItem('USERDATA')).displayName;
@@ -77,15 +79,16 @@ function CandidateJobs() {
   }, []);
 
   return jobs && jobs.length > 0 ? (
-    <div style={{ backgroundColor: "aliceblue", height: "100%" }}>
-      <h2 style={{ paddingTop: "3vh", marginTop: "0" }}>All availabe jobs</h2>
+    <div style={{ backgroundColor: mode.mode ? "#0d1117" : 'white', minHeight: "100vh", paddingBottom: '100px' }}>
+      <h2 style={{ paddingTop: "3vh", marginTop: "0", color: mode.mode ? 'white' : 'black' }}>All availabe jobs</h2>
       <Grid sx={{ margin: "auto", width: "100%" }} container>
         {jobs.map((val, index) => {
           return (
             <Grid
               key={index}
               sx={{
-                backgroundColor: "lavender",
+                backgroundColor: mode.mode ? 'black' : "lavender",
+                color: mode.mode ? 'white' : 'black',
                 padding: "20px !important",
                 margin: "auto",
                 marginBottom: "5vh",
@@ -123,8 +126,8 @@ function CandidateJobs() {
               <div style={{ marginTop: "20px" }}>
                 <Button
                   sx={{
-                    backgroundColor: "black",
-                    color: "white",
+                    backgroundColor: mode.mode ? 'white' : "black",
+                    color: mode.mode ? "black" : 'white',
                     padding: "8px 40px",
                     "&: hover": { backgroundColor: "black", color: "white" },
                   }}

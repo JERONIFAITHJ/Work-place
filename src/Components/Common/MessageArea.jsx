@@ -48,7 +48,7 @@ export default function MessageArea({
             position: "relative",
             width: { lg: "80%", xs: "100%" },
             overflowY: "scroll",
-            border: { xs: 'none' ,sm:"4px solid #112A46"},
+            border: { xs: 'none' ,sm: mode.mode ? '4px solid black' : "4px solid #112A46"},
             borderWidth: "4px 4px 4px 4px",
             borderBottom: 'none !important',
             borderRadius: {xs:'none', sm: "10px 10px 0 0"},
@@ -65,7 +65,7 @@ export default function MessageArea({
               position: "sticky",
               width: "100%",
               top: "0",
-              backgroundColor: "#112A46",
+              backgroundColor: mode.mode ? 'black' : "#112A46",
               color: "white",
             }}
           >
@@ -92,7 +92,7 @@ export default function MessageArea({
                 style={{
                   padding: "10px",
                   margin: "10px",
-                  backgroundColor: "#112A46",
+                  backgroundColor: mode.mode ? 'black' :  "#112A46",
                   color: "white",
                   minWidth: "50px",
                   alignSelf:
@@ -115,7 +115,7 @@ export default function MessageArea({
         </Grid>
         <Grid
           sx={{
-            border: {xs: 'none', sm:"4px solid #112A46"},
+            border: {xs: 'none', sm: mode.mode ? '4px solid black' : "4px solid #112A46"},
             borderWidth: "2px 4px 4px 4px",
             borderTop: 'none !important',
             width: { lg: "80%", xs: "100%" },
@@ -133,7 +133,10 @@ export default function MessageArea({
             sx={{
               width: { xs: "82%" },
               borderRadius: "5px 0 0 5px !important",
-              backgroundColor: "white",
+              backgroundColor: mode.mode ? 'black' : "white",
+              '& input':{
+                color: 'white'
+              }
             }}
             placeholder="Text goes here..."
             onChange={messageHandler}
@@ -146,7 +149,7 @@ export default function MessageArea({
             sx={{
               minWidth: {xs: "18%"},
               padding: "15px 0",
-              backgroundColor: "#112A46",
+              backgroundColor: mode.mode ? 'black' : "#112A46",
               color: "white",
             }}
             onClick={() => {
